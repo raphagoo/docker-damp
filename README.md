@@ -13,10 +13,10 @@ docker-compose down
 
 ```
 
-## Exec
+## Useful commands
 
-In order to run a command directly in docker machine, just do:
-
-```bash
-docker exec -ti php72_apache ls -al /var/log/apache2
-```
+* `docker-compose up --build -d` *create + start, with build, and detach*
+* `docker-compose down` *stop + remove*
+* `docker-compose start`
+* `docker-compose stop`
+* `docker exec -ti php72_apache bash` *execute interactively through TTY inside the container `php72_apache` the command `bash`*
