@@ -1,0 +1,29 @@
+version: '3'
+services:
+    db:
+        container_name: mysql_57
+        image: mysql:5.7
+        command: --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
+        volumes:
+        - "d:/database/docker/mysql_57:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: laka28
+        ports:
+        - "13306:3306"
+
+    web:
+        container_name: php72_apache
+        build:
+            context: .
+            dockerfile: Dockerfile_php72_apache
+        image: php72_apache_img
+        environment:
+            XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1 remote_autostart=1
+        ports:
+        - "9080:80"
+        volumes:
+        - "./apache2log:/var/log/apache2"
+        - "d:/database/docker/data:/home/docker/data"
+        - "d:/dev/nissan/gembakaizen/api:/home/docker/dev/nissan/gembakaizen/api"
+        depends_on:
+        - db
