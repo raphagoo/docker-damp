@@ -20,3 +20,4 @@ docker-compose down
 * `docker-compose start`
 * `docker-compose stop`
 * `docker exec -ti php72_apache bash` *execute interactively through TTY inside the container `php72_apache` the command `bash`*
+* docker logs -f  mysql_57
