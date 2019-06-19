@@ -14,7 +14,26 @@ docker-compose up -d
 
 # stop and remove all
 docker-compose down
+```
+## Inside php
 
+Db connexion should use service name and local port:
+
+```yaml
+# docker-compose.yml
+services:
+    db:
+        ports:
+        - "13306:3306"
+
+    web:
+        depends_on:
+        - db
+```
+
+```php
+// my PHP
+$cnx = new PDO("mysql:host=db;port=3306", "cnx-name", "cnx-pwd");
 ```
 
 ## MySql tweaks
