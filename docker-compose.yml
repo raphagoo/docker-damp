@@ -3,12 +3,14 @@ services:
     db:
         container_name: mysql_57
         image: mysql:5.7
-        command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
-        # command: --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
+        # sql-mode: tweak if needed (SELECT @@sql_mode)
+        # max_allowed_packet: increase on demand, ex: 256M
+        command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
         volumes:
-        - "d:/database/docker/mysql_57:/var/lib/mysql"
+        - "/home/papa/dev/docker/mysql_57:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: laka28
+        # the web service must refer to db:3306
         ports:
         - "13306:3306"
 
@@ -19,12 +21,14 @@ services:
             dockerfile: Dockerfile_php72_apache
         image: php72_apache_img
         environment:
-            XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1 remote_autostart=1
+            # remote_host: windows: host.docker.internal
+            #              linux: IP du docker0, got with ifconfig; typically 172.17.0.1
+            XDEBUG_CONFIG: remote_host=172.17.0.1 remote_port=9000 remote_enable=1
         ports:
         - "9080:80"
         volumes:
         - "./apache2log:/var/log/apache2"
-        - "d:/database/docker/data:/home/docker/data"
-        - "d:/dev/nissan/gembakaizen/api:/home/docker/dev/nissan/gembakaizen/api"
+        - "/home/papa/dev/docker/data:/home/docker/data"
+        - "/home/papa/dev/nissan/gembakaizen/api:/home/docker/dev/nissan/gembakaizen/api"
         depends_on:
         - db
