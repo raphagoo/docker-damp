@@ -7,7 +7,8 @@ services:
         # max_allowed_packet: increase on demand, ex: 256M
         command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
         volumes:
-        - "/home/papa/dev/docker/mysql_57:/var/lib/mysql"
+        #- "d:/database/docker/mysql_57:/var/lib/mysql"
+        - "${DB_VOLUME}:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: laka28
         # the web service must refer to db:3306
@@ -21,14 +22,12 @@ services:
             dockerfile: Dockerfile_php72_apache
         image: php72_apache_img
         environment:
-            # remote_host: windows: host.docker.internal
-            #              linux: IP du docker0, got with ifconfig; typically 172.17.0.1
-            XDEBUG_CONFIG: remote_host=172.17.0.1 remote_port=9000 remote_enable=1
+            XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
         ports:
         - "9080:80"
         volumes:
         - "./apache2log:/var/log/apache2"
-        - "/home/papa/dev/docker/data:/home/docker/data"
-        - "/home/papa/dev/nissan/gembakaizen/api:/home/docker/dev/nissan/gembakaizen/api"
+        - "${WEB_VOLUME_DATA}:/home/docker/data"
+        - "${WEB_VOLUME_DEV}:/home/docker/dev"
         depends_on:
         - db

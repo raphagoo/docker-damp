@@ -9,11 +9,17 @@ pour le dev
 choco install docker -y
 choco install docker-compose -y
 
+# touch env file
+cp template.env .env
+code .env
+
+# touch apache config
+cp apache.template.conf apache.conf
+code apache.conf
+
 # build & start:
 docker-compose up -d
 
-# stop and remove all
-docker-compose down
 ```
 ## Inside php
 
@@ -45,6 +51,7 @@ gives: `ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERRO
 
 ## Useful commands
 
+* `docker-compose config` *validate composer file (using .env)*
 * `docker-compose up --build -d` *create + start, with build, and detach*
 * `docker-compose down` *stop + remove*
 * `docker-compose start`
