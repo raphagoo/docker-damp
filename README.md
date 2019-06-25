@@ -2,7 +2,7 @@
 
 pour le dev
 
-## Quick start
+## Quick start
 
 ```bash
 # install docker (as admin on windows):
@@ -19,8 +19,8 @@ code apache/conf/apache.conf
 
 # build & start:
 docker-compose up -d
-
 ```
+
 ## Inside php
 
 Db connexion should use service name and local port:
@@ -41,6 +41,29 @@ services:
 // my PHP
 $cnx = new PDO("mysql:host=db;port=3306", "cnx-name", "cnx-pwd");
 ```
+
+## Using xDebug on VScode
+
+* PHP must be installed on host
+* Add a debug section in `.vscode/launch.json`;<br>
+  `pathMappings` is the most important property
+  ```json
+  {
+      "name": "Docker XDebug",
+      "type": "php",
+      "request": "launch",
+      "port": 9000,
+      "pathMappings": {
+          "/home/docker/dev/nissan/gembakaizen/api": "${workspaceFolder}"
+      },
+      "xdebugSettings": {
+          "max_data": 65535,
+          "show_hidden": 1,
+          "max_children": 100,
+          "max_depth": 5
+      }
+  },
+  ```
 
 ## MySql tweaks
 
