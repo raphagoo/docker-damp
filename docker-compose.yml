@@ -26,7 +26,8 @@ services:
         ports:
         - "9080:80"
         volumes:
-        - "./apache2log:/var/log/apache2"
+        - "./apache/conf:/etc/apache2/custom"
+        - "./apache/log:/var/log/apache2"
         - "${WEB_VOLUME_DATA}:/home/docker/data"
         - "${WEB_VOLUME_DEV}:/home/docker/dev"
         depends_on:

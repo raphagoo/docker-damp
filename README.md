@@ -14,8 +14,8 @@ cp template.env .env
 code .env
 
 # touch apache config
-cp apache.template.conf apache.conf
-code apache.conf
+cp apache/apache.template.conf apache/conf/apache.conf
+code apache/conf/apache.conf
 
 # build & start:
 docker-compose up -d
