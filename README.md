@@ -45,8 +45,10 @@ $cnx = new PDO("mysql:host=db;port=3306", "cnx-name", "cnx-pwd");
 ## Using xDebug on VScode
 
 * PHP must be installed on host
-* Add a debug section in `.vscode/launch.json`;<br>
+* Add a debug section in `.vscode/launch.json`;
+
   `pathMappings` is the most important property
+
   ```json
   {
       "name": "Docker XDebug",
@@ -72,6 +74,14 @@ SELECT @@sql_mode
 ```
 
 gives: `ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION`
+
+## Adding further php image
+
+It's possible to run as many php version as needed.
+NOTE that adding or removing a service can make ophans.
+Once the `docker-compose.yml` is changed, it can be useful build the material, using the following command:
+
+* `docker-compose up --build -d --remove-orphans`
 
 ## Useful commands
 

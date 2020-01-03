@@ -15,7 +15,25 @@ services:
         ports:
         - "13306:3306"
 
-    web:
+    web70:
+        container_name: php70_apache
+        build:
+            context: .
+            dockerfile: Dockerfile_php70_apache
+        image: php70_apache_img
+        environment:
+            XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
+        ports:
+        - "7080:80"
+        volumes:
+        - "./apache/conf:/etc/apache2/custom"
+        - "./apache/log:/var/log/apache2"
+        - "${WEB_VOLUME_DATA}:/home/docker/data"
+        - "${WEB_VOLUME_DEV}:/home/docker/dev"
+        depends_on:
+        - db
+
+    web72:
         container_name: php72_apache
         build:
             context: .
@@ -24,7 +42,7 @@ services:
         environment:
             XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
         ports:
-        - "9080:80"
+        - "7280:80"
         volumes:
         - "./apache/conf:/etc/apache2/custom"
         - "./apache/log:/var/log/apache2"
