@@ -5,7 +5,7 @@ FROM php:7.0-apache
 RUN printf "\nIncludeOptional custom/*.conf\n" >> /etc/apache2/apache2.conf
 RUN apt-get update
 # Install Xdebug
-RUN pecl install -f xdebug \
+RUN pecl install -f xdebug-2.7.2 \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && a2enmod rewrite \
     && docker-php-ext-install pdo pdo_mysql
