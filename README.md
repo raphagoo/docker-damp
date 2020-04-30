@@ -96,3 +96,7 @@ Once the `docker-compose.yml` is changed, it can be useful build the material, u
 ## Useful links
 
 * <https://docs.microsoft.com/fr-fr/virtualization/windowscontainers/manage-docker/configure-docker-daemon>
+
+## License
+
+This material comes under [license MIT](./LICENSE).
