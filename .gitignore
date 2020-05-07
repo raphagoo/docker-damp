@@ -1,6 +1,7 @@
 .DS_Store
 .directory
 vendor
+.svn
 
 # Editor directories and files
 .idea
