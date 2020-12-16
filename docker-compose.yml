@@ -1,70 +1,77 @@
 version: '3'
 services:
-    db:
+    mysql57:
         container_name: mysql_57
         image: mysql:5.7
         # sql-mode: tweak if needed (SELECT @@sql_mode)
         # max_allowed_packet: increase on demand, ex: 256M
         command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
         volumes:
-        #- "d:/database/docker/mysql_57:/var/lib/mysql"
-        - "${DB_VOLUME}:/var/lib/mysql"
+            #- "d:/database/docker/mysql_57:/var/lib/mysql"
+            - "${DB_VOLUME}:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: laka28
         # the web service must refer to db:3306
         ports:
-        - "13306:3306"
+            - "13306:3306"
+        networks:
+            lamp:
+                aliases:
+                    - db
 
     web70:
         container_name: php70_apache
-        build:
-            context: .
-            dockerfile: Dockerfile_php70_apache
-        image: php70_apache_img
+        build: php/7.0_apache
+        image: php_apache:7.0
         environment:
             XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
         ports:
-        - "7080:80"
+            - "7080:80"
         volumes:
-        - "./apache/conf:/etc/apache2/custom"
-        - "./apache/log:/var/log/apache2"
-        - "${WEB_VOLUME_DATA}:/home/docker/data"
-        - "${WEB_VOLUME_DEV}:/home/docker/dev"
+            - "./apache/conf:/etc/apache2/custom"
+            - "./apache/log:/var/log/apache2"
+            - "${WEB_VOLUME_DATA}:/home/docker/data"
+            - "${WEB_VOLUME_DEV}:/home/docker/dev"
         depends_on:
-        - db
+            - mysql57
+        networks:
+            - lamp
 
     web72:
         container_name: php72_apache
-        build:
-            context: .
-            dockerfile: Dockerfile_php72_apache
-        image: php72_apache_img
+        build: ./php/7.2_apache
+        image: php_apache:7.2
         environment:
             XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
         ports:
-        - "7280:80"
+            - "7280:80"
         volumes:
-        - "./apache/conf:/etc/apache2/custom"
-        - "./apache/log:/var/log/apache2"
-        - "${WEB_VOLUME_DATA}:/home/docker/data"
-        - "${WEB_VOLUME_DEV}:/home/docker/dev"
+            - "./apache/conf:/etc/apache2/custom"
+            - "./apache/log:/var/log/apache2"
+            - "${WEB_VOLUME_DATA}:/home/docker/data"
+            - "${WEB_VOLUME_DEV}:/home/docker/dev"
         depends_on:
-        - db
+            - mysql57
+        networks:
+            - lamp
 
     web74:
         container_name: php74_apache
-        build:
-            context: .
-            dockerfile: Dockerfile_php74_apache
-        image: php74_apache_img
+        build: ./php/7.4_apache
+        image: php_apache:7.4
         environment:
             XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
         ports:
-        - "7480:80"
+            - "7480:80"
         volumes:
-        - "./apache/conf:/etc/apache2/custom"
-        - "./apache/log:/var/log/apache2"
-        - "${WEB_VOLUME_DATA}:/home/docker/data"
-        - "${WEB_VOLUME_DEV}:/home/docker/dev"
+            - "./apache/conf:/etc/apache2/custom"
+            - "./apache/log:/var/log/apache2"
+            - "${WEB_VOLUME_DATA}:/home/docker/data"
+            - "${WEB_VOLUME_DEV}:/home/docker/dev"
         depends_on:
-        - db
+            - mysql57
+        networks:
+            - lamp
+
+networks:
+    lamp:
