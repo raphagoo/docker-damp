@@ -1,0 +1,12 @@
+#########################
+# Example for alias.conf
+#########################
+# Alias /company/project/api "/var/www/dev/company/project/web"
+# <Directory "/var/www/dev/company/project/web">
+#     Options Indexes FollowSymLinks MultiViews
+#     AllowOverride all
+#     Require all granted
+#     # emerg, alert, crit, error, warn, notice, info, debug, trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8
+#     # see https://httpd.apache.org/docs/2.4/fr/mod/core.html#loglevel
+#     # LogLevel trace8
+# </Directory>

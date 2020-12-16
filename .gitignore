@@ -18,3 +18,4 @@ apache2log
 apache.conf
 apache/conf/*.conf
 apache/log/*.log
+httpd/2.4/conf.d/*.conf

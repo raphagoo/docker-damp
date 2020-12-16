@@ -85,12 +85,14 @@ Once the `docker-compose.yml` is changed, it can be useful build the material, u
 
 ## Useful commands
 
+NOTE: shell on ubuntu based image is `bash`, on alpine based image is `/bin/sh`
+
 * `docker-compose config` *validate composer file (using .env)*
 * `docker-compose up --build -d` *create + start, with build, and detach*
 * `docker-compose down` *stop + remove*
 * `docker-compose start`
 * `docker-compose stop`
-* `docker exec -ti php72_apache bash` *execute interactively through TTY inside the container `php72_apache` the command `bash`*
+* `docker exec -ti php72_apache <shell command>` *execute interactively through TTY inside the container `php72_apache` the given command*
 * `docker logs -f  mysql_57`
 
 ## Useful links
