@@ -7,15 +7,15 @@ services:
         ports:
             - 80:80
         networks:
-            - lamp_new
+            - lamp_fpm
         volumes:
             - "./httpd/2.4/conf.d:/usr/local/apache2/conf/conf.d"
             - "${WEB_VOLUME_DATA}:/var/www/data"
             - "${WEB_VOLUME_DEV}:/var/www/dev"
         depends_on: 
             - php70
-            - php72
-            - php74
+            # - php72
+            # - php74
 
     mysql57:
         container_name: mysql_57
@@ -28,23 +28,29 @@ services:
             - "${DB_VOLUME}:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: laka28
-        # the web service must refer to db:3306
         ports:
             - "13306:3306"
         networks:
-            lamp:
+            lamp_legacy:
                 aliases:
                     - db
-            lamp_new:
+            lamp_fpm:
 
     php70:
         container_name: php70
-        # build: php/7.0_apache
         image: php:7.0-fpm-alpine
-        # environment:
-        #     XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
+        build:
+            context: php-fpm/7.0/
+            args:
+                DOCKER_PHP_ENABLE_COMPOSER: 'on'
+                DOCKER_PHP_ENABLE_MYSQL: 'on'
+                DOCKER_PHP_ENABLE_XDEBUG: 'on'
+                DOCKER_PHP_ENABLE_XDEBUG: 'on'
+                DOCKER_USER_UID: 1000
+                DOCKER_USER_GID: 1000
         expose:
             - 9000
+            - 9900
         ports:
             - "127.0.0.1:9070:9000"
         volumes:
@@ -53,43 +59,43 @@ services:
         depends_on:
             - mysql57
         networks:
-            - lamp_new
+            - lamp_fpm
 
-    php72:
-        container_name: php72
-        # build: php/7.0_apache
-        image: php:7.2-fpm-alpine
-        # environment:
-        #     XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
-        expose:
-            - 9000
-        ports:
-            - "127.0.0.1:9072:9000"
-        volumes:
-            - "${WEB_VOLUME_DATA}:/var/www/data"
-            - "${WEB_VOLUME_DEV}:/var/www/dev"
-        depends_on:
-            - mysql57
-        networks:
-            - lamp_new
+    # php72:
+    #     container_name: php72
+    #     # build: php/7.0_apache
+    #     image: php:7.2-fpm-alpine
+    #     # environment:
+    #     #     XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
+    #     expose:
+    #         - 9000
+    #     ports:
+    #         - "127.0.0.1:9072:9000"
+    #     volumes:
+    #         - "${WEB_VOLUME_DATA}:/var/www/data"
+    #         - "${WEB_VOLUME_DEV}:/var/www/dev"
+    #     depends_on:
+    #         - mysql57
+    #     networks:
+    #         - lamp_fpm
 
-    php74:
-        container_name: php74
-        # build: php/7.0_apache
-        image: php:7.4-fpm-alpine
-        # environment:
-        #     XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
-        expose:
-            - 9000
-        ports:
-            - "127.0.0.1:9074:9000"
-        volumes:
-            - "${WEB_VOLUME_DATA}:/var/www/data"
-            - "${WEB_VOLUME_DEV}:/var/www/dev"
-        depends_on:
-            - mysql57
-        networks:
-            - lamp_new
+    # php74:
+    #     container_name: php74
+    #     # build: php/7.0_apache
+    #     image: php:7.4-fpm-alpine
+    #     # environment:
+    #     #     XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
+    #     expose:
+    #         - 9000
+    #     ports:
+    #         - "127.0.0.1:9074:9000"
+    #     volumes:
+    #         - "${WEB_VOLUME_DATA}:/var/www/data"
+    #         - "${WEB_VOLUME_DEV}:/var/www/dev"
+    #     depends_on:
+    #         - mysql57
+    #     networks:
+    #         - lamp_fpm
 
     web70:
         container_name: php70_apache
@@ -107,7 +113,7 @@ services:
         depends_on:
             - mysql57
         networks:
-            - lamp
+            - lamp_legacy
 
     web72:
         container_name: php72_apache
@@ -125,7 +131,7 @@ services:
         depends_on:
             - mysql57
         networks:
-            - lamp
+            - lamp_legacy
 
     web74:
         container_name: php74_apache
@@ -143,8 +149,8 @@ services:
         depends_on:
             - mysql57
         networks:
-            - lamp
+            - lamp_legacy
 
 networks:
-    lamp:
-    lamp_new:
+    lamp_legacy:
+    lamp_fpm:
