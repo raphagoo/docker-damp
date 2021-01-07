@@ -117,7 +117,9 @@ services:
         build: ./php/7.2_apache
         image: php_apache:7.2
         environment:
-            XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
+            XDEBUG_MODE: develop,debug
+            XDEBUG_SESSION: VSCODE
+            XDEBUG_CONFIG: client_host=${WEB_REMOTE_HOST} client_port=9000 start_with_request=trigger
         ports:
             - "7280:80"
         volumes:
@@ -135,7 +137,9 @@ services:
         build: ./php/7.4_apache
         image: php_apache:7.4
         environment:
-            XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
+            XDEBUG_MODE: develop,debug
+            XDEBUG_SESSION: VSCODE
+            XDEBUG_CONFIG: client_host=${WEB_REMOTE_HOST} client_port=9000 start_with_request=trigger
         ports:
             - "7480:80"
         volumes:
