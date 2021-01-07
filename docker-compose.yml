@@ -1,21 +1,21 @@
 version: '3'
 services:
-    httpd24:
-        container_name: apache_24
-        build: httpd/2.4
-        image: apache:2.4
-        ports:
-            - 80:80
-        networks:
-            - lamp_fpm
-        volumes:
-            - "./httpd/2.4/conf.d:/usr/local/apache2/conf/conf.d"
-            - "${WEB_VOLUME_DATA}:/var/www/data"
-            - "${WEB_VOLUME_DEV}:/var/www/dev"
-        depends_on: 
-            - php70
-            # - php72
-            # - php74
+    # httpd24:
+    #     container_name: apache_24
+    #     build: httpd/2.4
+    #     image: apache:2.4
+    #     ports:
+    #         - 80:80
+    #     networks:
+    #         - lamp_fpm
+    #     volumes:
+    #         - "./httpd/2.4/conf.d:/usr/local/apache2/conf/conf.d"
+    #         - "${WEB_VOLUME_DATA}:/var/www/data"
+    #         - "${WEB_VOLUME_DEV}:/var/www/dev"
+    #     depends_on: 
+    #         - php70
+    #         # - php72
+    #         # - php74
 
     mysql57:
         container_name: mysql_57
@@ -34,32 +34,29 @@ services:
             lamp_legacy:
                 aliases:
                     - db
-            lamp_fpm:
+            # lamp_fpm:
 
-    php70:
-        container_name: php70
-        image: php:7.0-fpm-alpine
-        build:
-            context: php-fpm/7.0/
-            args:
-                DOCKER_PHP_ENABLE_COMPOSER: 'on'
-                DOCKER_PHP_ENABLE_MYSQL: 'on'
-                DOCKER_PHP_ENABLE_XDEBUG: 'on'
-                DOCKER_PHP_ENABLE_XDEBUG: 'on'
-                DOCKER_USER_UID: 1000
-                DOCKER_USER_GID: 1000
-        expose:
-            - 9000
-            - 9900
-        ports:
-            - "127.0.0.1:9070:9000"
-        volumes:
-            - "${WEB_VOLUME_DATA}:/var/www/data"
-            - "${WEB_VOLUME_DEV}:/var/www/dev"
-        depends_on:
-            - mysql57
-        networks:
-            - lamp_fpm
+    # php70:
+    #     container_name: php70
+    #     image: php:7.0-fpm-alpine
+    #     build:
+    #         context: php-fpm/7.0/
+    #         args:
+    #             DOCKER_PHP_ENABLE_COMPOSER: 'on'
+    #             DOCKER_PHP_ENABLE_MYSQL: 'on'
+    #             DOCKER_PHP_ENABLE_XDEBUG: 'on'
+    #             DOCKER_USER_UID: 1000
+    #             DOCKER_USER_GID: 1000
+    #     ports:
+    #         - "127.0.0.1:9070:9000"
+    #         - 9900
+    #     volumes:
+    #         - "${WEB_VOLUME_DATA}:/var/www/data"
+    #         - "${WEB_VOLUME_DEV}:/var/www/dev"
+    #     depends_on:
+    #         - mysql57
+    #     networks:
+    #         - lamp_fpm
 
     # php72:
     #     container_name: php72
@@ -153,4 +150,4 @@ services:
 
 networks:
     lamp_legacy:
-    lamp_fpm:
+    # lamp_fpm:
