@@ -6,21 +6,16 @@ FROM php:7.0-fpm-alpine
 
 # ---------------------------------------------------------- Setup build options
 ARG DOCKER_PHP_ENABLE_COMPOSER
-ARG DOCKER_PHP_ENABLE_MYSQL
 ARG DOCKER_PHP_ENABLE_XDEBUG
 ARG DOCKER_USER_UID=false
 ARG DOCKER_USER_GID=false
 
-RUN \
-    echo -n "With composer support:      " ; if [[ "${DOCKER_PHP_ENABLE_COMPOSER}" = "on" ]] ;    then echo "Yes"; else echo "No" ; fi && \
-    echo -n "With mysql support:         " ; if [[ "${DOCKER_PHP_ENABLE_MYSQL}" = "on" ]] ;    then echo "Yes"; else echo "No" ; fi && \
-    echo -n "With xdebug support:        " ; if [[ "${DOCKER_PHP_ENABLE_XDEBUG}" = "on" ]] ;      then echo "Yes"; else echo "No" ; fi && \
-    if [ -z ${DOCKER_USER_UID+x} ]; then echo "DOCKER_USER_UID is unset"; DOCKER_USER_UID=1000; else echo "DOCKER_USER_UID is set to '$DOCKER_USER_UID'"; fi && \
-    if [ -z ${DOCKER_USER_GID+x} ]; then echo "DOCKER_USER_GID is unset"; DOCKER_USER_GID=1000; else echo "DOCKER_USER_GID is set to '$DOCKER_USER_GID'"; fi
-
-
 # --------------------------------------------------------- Install dependancies
 RUN apk add --update --no-cache \
+        # Build dependencies for gd \
+        freetype \
+        libpng \
+        libjpeg-turbo \
         # Dependancy for intl \
         icu-libs \
         libintl \
@@ -45,10 +40,10 @@ RUN apk add --update --no-cache --virtual .docker-php-global-dependancies \
         # Build dependancies for Pecl \
         $PHPIZE_DEPS
 
-
 # ------------------------------------------------------- Install php extensions
 RUN php -m && \
     docker-php-ext-configure gd \
+        --with-gd \
         --with-freetype-dir=/usr/include/ \
         --with-jpeg-dir=/usr/include/ \
         --with-png-dir=/usr/include/ && \
@@ -57,38 +52,31 @@ RUN php -m && \
     docker-php-ext-install gmp \
         gd \
         intl \
-        zip && \
-    php -m
+        zip
 
 
 # --------------------------------------------------- Conditionnal installations
 # Enable MySQL
-RUN if [ "${DOCKER_PHP_ENABLE_MYSQL}" != "off" ]; then \
-        apk add --update --no-cache --virtual .docker-php-mysql-dependancies \
-            # Dependancy for mysql \
-            mysql-client && \
-        # MySQLnd is already compiled. \
-        # See: https://github.com/docker-library/php/issues/167 \
-        docker-php-ext-configure mysqli && \
-        docker-php-ext-configure pdo_mysql && \
-        docker-php-ext-install mysqli \
-            pdo_mysql && \
-        apk del .docker-php-mysql-dependancies && \
-        php -m; \
-    else \
-        echo "Skip mysql support"; \
-    fi
+RUN apk add --update --no-cache --virtual .docker-php-mysql-dependancies \
+        # Dependancy for mysql \
+        mysql-client && \
+    # MySQLnd is already compiled. \
+    # See: https://github.com/docker-library/php/issues/167 \
+    docker-php-ext-configure mysqli && \
+    docker-php-ext-configure pdo_mysql && \
+    docker-php-ext-install mysqli pdo_mysql && \
+    apk del .docker-php-mysql-dependancies
 
 # Enable Xdebug
 RUN if [ "${DOCKER_PHP_ENABLE_XDEBUG}" != "off" ]; then \
-        yes | pecl install xdebug-2.7.2 && \
-        echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
-        echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-        echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-        echo "xdebug.remote_port=9900" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-        php -m; \
-    else \
-        echo "Skip xdebug support"; \
+        # je ne m'explique pas pourquoi, maius nécessaire pour une reconstruction d'image
+        pecl uninstall xdebug && \
+        pecl install xdebug-2.7.2; \
+        # echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
+        # echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+        # echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+        # echo "xdebug.remote_port=9900" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+        # php -m; \
     fi
 
 
@@ -109,8 +97,6 @@ RUN if [ "${DOCKER_PHP_ENABLE_COMPOSER}" != "off" ]; then \
             exit $RESULT && \
             composer -V; \
         fi; \
-    else \
-        echo "Skip composer support"; \
     fi
 
 
