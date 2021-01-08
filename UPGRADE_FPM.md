@@ -23,3 +23,13 @@ Il y a des différences notables dans les applications disponibles ou l'emplacem
 ## Changements
 
 * `/home/docker` remplacé par `/var/www` (bonne pratique)
+
+## Choix de la version PHP
+
+À Le choix de la version PHP se fait dans le ```.htaccess``` du projet:
+
+```apache
+<FilesMatch \.php$>
+    SetHandler "proxy:fcgi://php70:9000"
+</FilesMatch>
+```
