@@ -72,11 +72,6 @@ RUN if [ "${DOCKER_PHP_ENABLE_XDEBUG}" != "off" ]; then \
         # je ne m'explique pas pourquoi, maius nécessaire pour une reconstruction d'image
         pecl uninstall xdebug && \
         pecl install xdebug-2.7.2; \
-        # echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
-        # echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-        # echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-        # echo "xdebug.remote_port=9900" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-        # php -m; \
     fi
 
 
@@ -103,8 +98,6 @@ RUN if [ "${DOCKER_PHP_ENABLE_COMPOSER}" != "off" ]; then \
 # ---------------------------------------------------------------- Configuration
 # My configuration.
 RUN sed -i "s/^;security.limit_extensions =.*/security.limit_extensions = .php .php7 .php70/g" /usr/local/etc/php-fpm.d/www.conf
-# COPY php.d /usr/local/etc/php/conf.d
-# COPY etc /usr/local/etc/php
 
 # Big clean
 RUN apk del .docker-php-global-dependancies && \
