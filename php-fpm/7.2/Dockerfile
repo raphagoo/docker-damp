@@ -1,5 +1,5 @@
 # @see: https://github.com/llaumgui/docker-images
-FROM php:7.0-fpm-alpine
+FROM php:7.2-fpm-alpine
 
 # ---------------------------------------------------------- Setup build options
 ARG DOCKER_PHP_ENABLE_XDEBUG=on
@@ -60,7 +60,7 @@ RUN apk add --update --no-cache --virtual .docker-php-mysql-dependancies \
 
 # ---------------------------------------------------------------- Enable Xdebug
 RUN if [ "${DOCKER_PHP_ENABLE_XDEBUG}" != "off" ]; then \
-        pecl install -f xdebug-2.7.2; \
+        pecl install -f xdebug && \
         echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini; \
     fi
 
