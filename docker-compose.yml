@@ -38,9 +38,9 @@ services:
 
     php70:
         container_name: php70
-        image: php:7.0-fpm-alpine
+        image: php:7.0-fpm
         build:
-            context: php-fpm-alpine/7.0/
+            context: php-fpm/7.0/
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'on'
                 DOCKER_PHP_PRODUCTION: 'off'
@@ -58,9 +58,9 @@ services:
 
     php72:
         container_name: php72
-        image: php:7.2-fpm-alpine
+        image: php:7.2-fpm
         build:
-            context: php-fpm-alpine/7.2/
+            context: php-fpm/7.2/
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'on'
                 DOCKER_PHP_PRODUCTION: 'off'
@@ -80,9 +80,9 @@ services:
 
     php74:
         container_name: php74
-        image: php:7.4-fpm-alpine
+        image: php:7.4-fpm
         build:
-            context: php-fpm-alpine/7.4/
+            context: php-fpm/7.4/
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'on'
                 DOCKER_PHP_PRODUCTION: 'off'
@@ -102,9 +102,9 @@ services:
 
     php80:
         container_name: php80
-        image: php:8.0-fpm-alpine
+        image: php:8.0-fpm
         build:
-            context: php-fpm-alpine/8.0/
+            context: php-fpm/8.0/
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'on'
                 DOCKER_PHP_PRODUCTION: 'off'
