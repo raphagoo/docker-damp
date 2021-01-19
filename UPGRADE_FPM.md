@@ -1,14 +1,16 @@
-# Upgrade pour passer à la version PHP-FPM
+# Passage à la version PHP-FPM
 
-Inspiré par les images de [Guillaume Kulakowski](https://blog.kulakowski.fr/post/docker-pour-ma-stack-lamp) et ses [images Docker](https://github.com/llaumgui/docker-images/)
+## Images Debian ou Alpine
 
-## Images Alpine
+Les images utilisées sont basées sur 2 distributions: Debian et Alpine.
 
-Les images utilisées existent en 2 distributions: Ubuntu et Alpine.
+La distribution Alpine, est sensée être plus légère (environ 1/3, donc 5Mo au lieu de 15) et orientée sécurité.
 
-Le nouveau jeu d'images est basé sur la distribution Alpine, plus légère et orientée sécurité.
+Mais, pour du PHP avec extensions, la donne change: 450Mo contre 600Mo
 
-Alpine est une distribution Linux beaucoup plus légère qu'Ubuntu (environ 1/3, donc 5Mo au lieu de 15).
+D'autre part, la reconstruction d'une image basée sur Alpine prend plus de temps, car les extensions sont recompilées à chaque étape
+
+Donc la version Alpine doit être réservée aux images ne nécessitant pas de customisation, comme Apache ou MySql.
 
 Il y a des différences notables dans les applications disponibles ou l'emplacement des fichiers de configurations, par ex:
 
@@ -23,13 +25,25 @@ Il y a des différences notables dans les applications disponibles ou l'emplacem
 ## Changements
 
 * `/home/docker` remplacé par `/var/www` (bonne pratique)
+* le nom du container BDD a changé (`mysql57` au lieu de `db`), afin de pouvoir utiliser d'autres versions
+* le serveur Apache utilise par défaut le port `80`, qu'il est possible d'ajuster dans le `docker-compose.yml`.
+* xDebug utilise le port `9003`, port par défaut à partir de la version 3
+* Le mappage fichiers de xDebug dans vsCode est modifié pour "voir" `/var/www/`
 
 ## Choix de la version PHP
 
-À Le choix de la version PHP se fait dans le ```.htaccess``` du projet:
+Le choix de la version PHP se fait dans le ```.htaccess``` du projet:
 
 ```apache
 <FilesMatch \.php$>
-    SetHandler "proxy:fcgi://php70:9000"
+    SetHandler "proxy:fcgi://php74:9000"
 </FilesMatch>
 ```
+
+## Transition
+
+Les 2 pools de services (networks) sont disponibles pendant une phase de transition.
+
+Le réglage du `.htaccess` couplé au choix du port permet de passer d'utiliser l'un ou l'autre des 2 réseaux.
+
+Les configurations xDebug peuvent cohabiter dans vsCode

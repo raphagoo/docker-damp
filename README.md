@@ -28,18 +28,18 @@ Db connexion should use service name and local port:
 ```yaml
 # docker-compose.yml
 services:
-    db:
+    mysql57:
         ports:
         - "13306:3306"
 
-    web:
+    php74:
         depends_on:
-        - db
+        - mysql57
 ```
 
 ```php
 // my PHP
-$cnx = new PDO("mysql:host=db;port=3306", "cnx-name", "cnx-pwd");
+$cnx = new PDO("mysql:host=mysql57;port=3306", "cnx-name", "cnx-pwd");
 ```
 
 ## Using xDebug on VScode
@@ -54,9 +54,9 @@ $cnx = new PDO("mysql:host=db;port=3306", "cnx-name", "cnx-pwd");
       "name": "Docker XDebug",
       "type": "php",
       "request": "launch",
-      "port": 9000,
+      "port": 9003,
       "pathMappings": {
-          "/home/docker/dev/nissan/gembakaizen/api": "${workspaceFolder}"
+          "/var/www/dev/nissan/gembakaizen/api": "${workspaceFolder}"
       },
       "xdebugSettings": {
           "max_data": 65535,
