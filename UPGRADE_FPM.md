@@ -24,11 +24,13 @@ Il y a des différences notables dans les applications disponibles ou l'emplacem
 
 ## Changements
 
-* `/home/docker` remplacé par `/var/www` (bonne pratique)
+* `/home/docker` remplacé par `/var/www` (bonne pratique), impacte:
+  * les aliases du service Apache
+  * la configuration xDebug dans vsCode
+* configuration d'Apache dans `httpd/2.4/conf.d`
 * le nom du container BDD a changé (`mysql57` au lieu de `db`), afin de pouvoir utiliser d'autres versions
 * le serveur Apache utilise par défaut le port `80`, qu'il est possible d'ajuster dans le `docker-compose.yml`.
 * xDebug utilise le port `9003`, port par défaut à partir de la version 3
-* Le mappage fichiers de xDebug dans vsCode est modifié pour "voir" `/var/www/`
 
 ## Choix de la version PHP
 

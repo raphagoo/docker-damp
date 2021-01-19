@@ -67,6 +67,10 @@ $cnx = new PDO("mysql:host=mysql57;port=3306", "cnx-name", "cnx-pwd");
   },
   ```
 
+## Apache configuration
+
+Aliases should be defined in `httpd/2.4/conf.d/alias.conf`, refering to `/var/www/...`
+
 ## MySql tweaks
 
 ```sql
