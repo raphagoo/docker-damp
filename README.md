@@ -94,6 +94,7 @@ NOTE: shell on ubuntu based image is `bash`, on alpine based image is `/bin/sh`
 * `docker-compose stop`
 * `docker exec -ti php72_apache <shell command>` *execute interactively through TTY inside the container `php72_apache` the given command*
 * `docker logs -f  mysql_57`
+* `docker exec -ti -w /var/www/chemin_working_dir/ php74 command` *exécution d'une commande, par ex: composer*
 
 ## Useful links
 
