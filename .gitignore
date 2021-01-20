@@ -2,6 +2,7 @@
 .directory
 vendor
 .svn
+_*
 
 # Editor directories and files
 .idea
