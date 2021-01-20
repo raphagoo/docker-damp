@@ -8,6 +8,7 @@ services:
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'off'
                 DOCKER_PHP_PRODUCTION: 'on'
+        restart: always
         environment:
             XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9003 remote_enable=1
         ports:
@@ -26,6 +27,7 @@ services:
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'off'
                 DOCKER_PHP_PRODUCTION: 'on'
+        restart: always
         environment:
             XDEBUG_MODE: develop,debug
             XDEBUG_SESSION: VSCODE
@@ -46,6 +48,7 @@ services:
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'off'
                 DOCKER_PHP_PRODUCTION: 'on'
+        restart: always
         environment:
             XDEBUG_MODE: develop,debug
             XDEBUG_SESSION: VSCODE
@@ -66,6 +69,7 @@ services:
             args:
                 DOCKER_PHP_ENABLE_XDEBUG: 'off'
                 DOCKER_PHP_PRODUCTION: 'on'
+        restart: always
         environment:
             XDEBUG_MODE: develop,debug
             XDEBUG_SESSION: VSCODE
