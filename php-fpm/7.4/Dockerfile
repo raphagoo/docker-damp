@@ -38,8 +38,8 @@ RUN apt-get install -y \
     && docker-php-ext-install gmp
 
 # ------------------------------------------------------------- Install composer
-RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/local/bin --filename=composer
+RUN apt-get install -y git
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # --------------------------------------------------------------- Install Xdebug
 RUN if [ "${DOCKER_PHP_ENABLE_XDEBUG}" != "off" ]; then \
