@@ -13,6 +13,9 @@ choco install docker-compose -y
 cp template.env .env
 code .env
 
+# touch docker-compose.yml file
+cp docker-compose-dev.yml docker-compose.yml
+
 # touch apache config
 cp apache/apache.template.conf apache/conf/apache.conf
 code apache/conf/apache.conf
@@ -20,6 +23,19 @@ code apache/conf/apache.conf
 # build & start:
 docker-compose up -d
 ```
+
+## Choose your docker-compose file
+
+`docker-compose.yml` comes in 2 versions:
+
+* dev
+  * with xdebug
+  * `php.ini` with recommanded settings for dev
+  * full LAMP stack (with Apache and mySql)
+* prod
+  * without xdebug
+  * `php.ini` with recommanded settings for prod
+  * only with PHP containers
 
 ## Inside php
 
