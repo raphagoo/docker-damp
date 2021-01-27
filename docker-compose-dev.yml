@@ -25,11 +25,11 @@ services:
         # max_allowed_packet: increase on demand, ex: 256M
         command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
         volumes:
-            - "${DB_VOLUME}:/var/lib/mysql"
+            - "${DB_VOLUME}/mysql_57:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: laka28
         ports:
-            - "13306:3306"
+            - "3357:3306"
         networks:
             lamp_fpm:
 
