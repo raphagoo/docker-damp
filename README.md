@@ -103,6 +103,16 @@ Once the `docker-compose.yml` is changed, it can be useful build the material, u
 
 * `docker-compose up --build -d --remove-orphans`
 
+## Choosing the version of PHP
+
+The version of PHP is set in the file `.htaccess` of the project:
+
+```apache
+<FilesMatch \.php$>
+    SetHandler "proxy:fcgi://php74:9000"
+</FilesMatch>
+```
+
 ## Useful commands
 
 NOTE: shell on ubuntu based image is `bash`, on alpine based image is `/bin/sh`
