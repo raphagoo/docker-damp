@@ -31,9 +31,6 @@ services:
         ports:
             - "13306:3306"
         networks:
-            lamp_legacy:
-                aliases:
-                    - db
             lamp_fpm:
 
     php70:
@@ -122,64 +119,5 @@ services:
         networks:
             - lamp_fpm
 
-    web70:
-        container_name: php70_apache
-        build: php/7.0_apache
-        image: php_apache:7.0
-        environment:
-            XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9000 remote_enable=1
-        ports:
-            - "7080:80"
-        volumes:
-            - "./apache/conf:/etc/apache2/custom"
-            - "./apache/log:/var/log/apache2"
-            - "${WEB_VOLUME_DATA}:/home/docker/data"
-            - "${WEB_VOLUME_DEV}:/home/docker/dev"
-        depends_on:
-            - mysql57
-        networks:
-            - lamp_legacy
-
-    web72:
-        container_name: php72_apache
-        build: ./php/7.2_apache
-        image: php_apache:7.2
-        environment:
-            XDEBUG_MODE: develop,debug
-            XDEBUG_SESSION: VSCODE
-            XDEBUG_CONFIG: client_host=${WEB_REMOTE_HOST} client_port=9000 start_with_request=trigger
-        ports:
-            - "7280:80"
-        volumes:
-            - "./apache/conf:/etc/apache2/custom"
-            - "./apache/log:/var/log/apache2"
-            - "${WEB_VOLUME_DATA}:/home/docker/data"
-            - "${WEB_VOLUME_DEV}:/home/docker/dev"
-        depends_on:
-            - mysql57
-        networks:
-            - lamp_legacy
-
-    web74:
-        container_name: php74_apache
-        build: ./php/7.4_apache
-        image: php_apache:7.4
-        environment:
-            XDEBUG_MODE: develop,debug
-            XDEBUG_SESSION: VSCODE
-            XDEBUG_CONFIG: client_host=${WEB_REMOTE_HOST} client_port=9000 start_with_request=trigger
-        ports:
-            - "7480:80"
-        volumes:
-            - "./apache/conf:/etc/apache2/custom"
-            - "./apache/log:/var/log/apache2"
-            - "${WEB_VOLUME_DATA}:/home/docker/data"
-            - "${WEB_VOLUME_DEV}:/home/docker/dev"
-        depends_on:
-            - mysql57
-        networks:
-            - lamp_legacy
-
 networks:
-    lamp_legacy:
     lamp_fpm:
