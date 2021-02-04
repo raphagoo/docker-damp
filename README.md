@@ -113,6 +113,16 @@ The version of PHP is set in the file `.htaccess` of the project:
 </FilesMatch>
 ```
 
+## Using dockerized SMTP
+
+In production environment, the service `smtp` is directly usable by other services of the docker network
+
+Configuration setting to be used:
+
+* smtp address: `smtp` (the name of the service)
+* smtp port: left as default (25)
+* neither login nor password
+
 ## Useful commands
 
 NOTE: shell on ubuntu based image is `bash`, on alpine based image is `/bin/sh`
