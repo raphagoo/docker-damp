@@ -2,6 +2,18 @@
 
 pour le dev
 
+## Installing on Windows
+
+On Windows, it is recommanded to install [Docker-desktop](https://www.docker.com/products/docker-desktop) with [WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/about)
+
+The best way is to use [Chocolatey](https://chocolatey.org/) to install and update the software
+
+```bash
+choco install wsl2 docker-desktop docker-compose -y
+```
+
+In addition, there're some tweeks to improve performances: <https://stackoverflow.com/questions/62154016/docker-on-wsl2-very-slow>
+
 ## Quick start
 
 ```bash
