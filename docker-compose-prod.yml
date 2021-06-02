@@ -20,6 +20,11 @@ services:
             - lamp_fpm
         depends_on:
             - smtp
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "1m"
+                max-file: "2"
 
     php72:
         container_name: php72
@@ -43,7 +48,12 @@ services:
             - lamp_fpm
         depends_on:
             - smtp
-
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "1m"
+                max-file: "2"
+    
     php74:
         container_name: php74
         image: php:7.4-fpm
@@ -66,7 +76,12 @@ services:
             - lamp_fpm
         depends_on:
             - smtp
-
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "1m"
+                max-file: "2"
+    
     php80:
         container_name: php80
         image: php:8.0-fpm
@@ -89,7 +104,12 @@ services:
             - lamp_fpm
         depends_on:
             - smtp
-
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "1m"
+                max-file: "2"
+    
     smtp:
         image: namshi/smtp
         container_name: smtp
@@ -125,6 +145,11 @@ services:
             # - SMARTHOST_ALIASES=
         networks:
             - lamp_fpm
-
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "1m"
+                max-file: "2"
+    
 networks:
     lamp_fpm:

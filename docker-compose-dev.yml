@@ -17,6 +17,10 @@ services:
             - php72
             - php74
             - php80
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
 
     mysql57:
         container_name: mysql_57
@@ -32,7 +36,11 @@ services:
             - "3357:3306"
         networks:
             lamp_fpm:
-
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+        
     mariadb10:
         container_name: mariadb_10
         image: mariadb:10
@@ -47,6 +55,10 @@ services:
             - "3410:3306"
         networks:
             lamp_fpm:
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
 
     php70:
         container_name: php70
@@ -68,6 +80,10 @@ services:
             - mariadb10
         networks:
             - lamp_fpm
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
 
     php72:
         container_name: php72
@@ -91,6 +107,10 @@ services:
             - mariadb10
         networks:
             - lamp_fpm
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
 
     php74:
         container_name: php74
@@ -114,6 +134,10 @@ services:
             - mariadb10
         networks:
             - lamp_fpm
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
 
     php80:
         container_name: php80
@@ -137,6 +161,10 @@ services:
             - mariadb10
         networks:
             - lamp_fpm
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
 
 networks:
     lamp_fpm:

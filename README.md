@@ -135,6 +135,20 @@ Configuration setting to be used:
 * smtp port: left as default (25)
 * neither login nor password
 
+## Logs
+
+Docker provides a log system that store log in 1 file, unlimited length.\
+It is possible to change the friver and its options.\
+See [JSON File logging driver](https://docs.docker.com/config/containers/logging/json-file/) and [Logging in compose file](https://docs.docker.com/compose/compose-file/compose-file-v3/#logging)
+
+Various commands may help:
+
+* `docker logs`
+* `docker service logs`
+* `docker-compose logs`
+
+TIP: use the `--help` option before.
+
 ## Useful commands
 
 NOTE: shell on ubuntu based image is `bash`, on alpine based image is `/bin/sh`
