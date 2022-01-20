@@ -12,49 +12,11 @@ services:
             - "./httpd/2.4/conf.d:/usr/local/apache2/conf/conf.d"
             - "${WEB_VOLUME_DATA}:/var/www/data"
             - "${WEB_VOLUME_DEV}:/var/www/dev"
-        depends_on: 
+        depends_on:
             - php70
             - php72
             - php74
             - php80
-        logging:
-            driver: "json-file"
-            options:
-                max-size: "200k"
-
-    mysql57:
-        container_name: mysql_57
-        image: mysql:5.7
-        # sql-mode: tweak if needed (SELECT @@sql_mode)
-        # max_allowed_packet: increase on demand, ex: 256M
-        command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
-        volumes:
-            - "${DB_VOLUME}/mysql_57:/var/lib/mysql"
-        environment:
-            MYSQL_ROOT_PASSWORD: laka28
-        ports:
-            - "3357:3306"
-        networks:
-            lamp_fpm:
-        logging:
-            driver: "json-file"
-            options:
-                max-size: "200k"
-        
-    mariadb10:
-        container_name: mariadb_10
-        image: mariadb:10
-        # sql-mode: tweak if needed (SELECT @@sql_mode)
-        # max_allowed_packet: increase on demand, ex: 256M
-        command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
-        volumes:
-            - "${DB_VOLUME}/mariadb_10:/var/lib/mysql"
-        environment:
-            MYSQL_ROOT_PASSWORD: laka28
-        ports:
-            - "3410:3306"
-        networks:
-            lamp_fpm:
         logging:
             driver: "json-file"
             options:
@@ -77,7 +39,8 @@ services:
             - "${WEB_VOLUME_DEV}:/var/www/dev"
         depends_on:
             - mysql57
-            - mariadb10
+            - mysql80
+            # - mariadb10
         networks:
             - lamp_fpm
         logging:
@@ -104,7 +67,8 @@ services:
             - "${WEB_VOLUME_DEV}:/var/www/dev"
         depends_on:
             - mysql57
-            - mariadb10
+            - mysql80
+            # - mariadb10
         networks:
             - lamp_fpm
         logging:
@@ -131,7 +95,8 @@ services:
             - "${WEB_VOLUME_DEV}:/var/www/dev"
         depends_on:
             - mysql57
-            - mariadb10
+            - mysql80
+            # - mariadb10
         networks:
             - lamp_fpm
         logging:
@@ -158,13 +123,71 @@ services:
             - "${WEB_VOLUME_DEV}:/var/www/dev"
         depends_on:
             - mysql57
-            - mariadb10
+            - mysql80
+            # - mariadb10
         networks:
             - lamp_fpm
         logging:
             driver: "json-file"
             options:
                 max-size: "200k"
+
+    mysql57:
+        container_name: mysql_57
+        image: mysql:5.7
+        # sql-mode: tweak if needed (SELECT @@sql_mode)
+        # max_allowed_packet: increase on demand, ex: 256M
+        command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
+        volumes:
+            - "${DB_VOLUME}/mysql_57:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: laka28
+        ports:
+            - "3357:3306"
+        networks:
+            lamp_fpm:
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+
+    mysql80:
+        container_name: mysql_80
+        image: mysql:8.0
+        # sql-mode: tweak if needed (SELECT @@sql_mode)
+        # max_allowed_packet: increase on demand, ex: 256M
+        command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
+        volumes:
+            - "${DB_VOLUME}/mysql_80:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: laka28
+        ports:
+            - "3380:3306"
+        networks:
+            lamp_fpm:
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+
+    # mariadb10:
+    #     container_name: mariadb_10
+    #     image: mariadb:10
+    #     # sql-mode: tweak if needed (SELECT @@sql_mode)
+    #     # max_allowed_packet: increase on demand, ex: 256M
+    #     command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
+    #     volumes:
+    #         - "${DB_VOLUME}/mariadb_10:/var/lib/mysql"
+    #     environment:
+    #         MYSQL_ROOT_PASSWORD: laka28
+    #     ports:
+    #         - "3410:3306"
+    #     networks:
+    #         lamp_fpm:
+    #     logging:
+    #         driver: "json-file"
+    #         options:
+    #             max-size: "200k"
 
 networks:
     lamp_fpm:
