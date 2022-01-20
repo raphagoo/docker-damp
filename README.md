@@ -115,6 +115,10 @@ Once the `docker-compose.yml` is changed, it can be useful build the material, u
 
 * `docker-compose up --build -d --remove-orphans`
 
+## Rebuild a single service
+
+* `docker-compose up -d --no-deps --build <service_name>`
+
 ## Choosing the version of PHP
 
 The version of PHP is set in the file `.htaccess` of the project:
