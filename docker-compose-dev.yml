@@ -156,7 +156,7 @@ services:
         image: mysql:8.0
         # sql-mode: tweak if needed (SELECT @@sql_mode)
         # max_allowed_packet: increase on demand, ex: 256M
-        command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
+        command: --sql-mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
         volumes:
             - "${DB_VOLUME}/mysql_80:/var/lib/mysql"
         environment:
