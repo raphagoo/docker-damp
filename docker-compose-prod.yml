@@ -5,9 +5,7 @@ services:
         image: php:7.0-fpm
         build:
             context: php-fpm/7.0/
-            args:
-                DOCKER_PHP_ENABLE_XDEBUG: 'off'
-                DOCKER_PHP_PRODUCTION: 'on'
+            dockerfile: Dockerfile.prod
         restart: always
         environment:
             XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9003 remote_enable=1
@@ -31,9 +29,7 @@ services:
         image: php:7.2-fpm
         build:
             context: php-fpm/7.2/
-            args:
-                DOCKER_PHP_ENABLE_XDEBUG: 'off'
-                DOCKER_PHP_PRODUCTION: 'on'
+            dockerfile: Dockerfile.prod
         restart: always
         environment:
             XDEBUG_MODE: develop,debug
@@ -53,15 +49,13 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
-    
+
     php74:
         container_name: php74
         image: php:7.4-fpm
         build:
             context: php-fpm/7.4/
-            args:
-                DOCKER_PHP_ENABLE_XDEBUG: 'off'
-                DOCKER_PHP_PRODUCTION: 'on'
+            dockerfile: Dockerfile.prod
         restart: always
         environment:
             XDEBUG_MODE: develop,debug
@@ -81,15 +75,13 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
-    
+
     php80:
         container_name: php80
         image: php:8.0-fpm
         build:
             context: php-fpm/8.0/
-            args:
-                DOCKER_PHP_ENABLE_XDEBUG: 'off'
-                DOCKER_PHP_PRODUCTION: 'on'
+            dockerfile: Dockerfile.prod
         restart: always
         environment:
             XDEBUG_MODE: develop,debug
@@ -109,7 +101,7 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
-    
+
     smtp:
         image: namshi/smtp
         container_name: smtp
@@ -150,6 +142,6 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
-    
+
 networks:
     lamp_fpm:

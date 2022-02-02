@@ -1,0 +1,15 @@
+FROM php:7.4-fpm
+
+RUN apt-get update
+RUN apt-get install -y\
+    # environment wkhtmltopdf
+    libxrender1 libfontconfig1 libxext6
+
+# ------------------------------------------------------------ configuration PHP
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini";
+
+# --------------------------------------------------------------- extensions PHP
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions
+RUN install-php-extensions\
+    pdo_mysql mysqli gd intl zip gmp
