@@ -1,62 +1,19 @@
 FROM php:7.2-fpm
 
-ARG DOCKER_PHP_ENABLE_XDEBUG=on
-ARG DOCKER_PHP_PRODUCTION=off
-
 RUN apt-get update
-
-# ----------------------------------------------------------------- Enable MySQL
-RUN docker-php-ext-install pdo pdo_mysql mysqli
-
-# ----------------------------------------------------------------- gd extension
-RUN apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    && docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-    && docker-php-ext-install gd
-
-# --------------------------------------------------------------- intl extension
-RUN apt-get install -y \
-        libicu-dev \
-    && docker-php-ext-configure intl --enable-intl \
-    && docker-php-ext-install intl
-
-# ---------------------------------------------------------------- zip extension
-RUN apt-get install -y \
-        zlib1g-dev \
-    && docker-php-ext-configure zip \
-    && docker-php-ext-install zip
-
-# ---------------------------------------------------------------- gmp extension
-RUN apt-get install -y \
-        libgmp-dev \
-#         libmhash-dev \
-#         libmcrypt-dev\
-#     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
-    && docker-php-ext-configure gmp \
-    && docker-php-ext-install gmp
-
-# ------------------------------------------------------------- Install composer
-RUN apt-get install -y git
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-
-# --------------------------------------------------------------- Install Xdebug
-RUN if [ "${DOCKER_PHP_ENABLE_XDEBUG}" != "off" ]; then \
-        pecl install -f xdebug && \
-        echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" \
-            > /usr/local/etc/php/conf.d/xdebug.ini; \
-    fi
+RUN apt-get install -y\
+    # dev
+    git\
+    # environment wkhtmltopdf
+    libxrender1 libfontconfig1 libxext6
 
 # ------------------------------------------------------------ configuration PHP
-RUN if [ "${DOCKER_PHP_PRODUCTION}" != "off" ]; then \
-        cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"; \
-    else \
-        cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; \
-    fi
+RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini";
 
-# ------------------------------------------------------ environment wkhtmltopdf
-RUN apt-get install -y libxrender1 libfontconfig1 libxext6
+# --------------------------------------------------------------- extensions PHP
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions
+RUN install-php-extensions\
+    # dev
+    @composer xdebug\
+    pdo_mysql mysqli gd intl zip gmp
