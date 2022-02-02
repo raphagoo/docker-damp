@@ -141,6 +141,10 @@ Configuration setting to be used:
 * smtp port: left as default (25)
 * neither login nor password
 
+## PHP extensions
+
+A very useful tool is used now to install them : [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer)
+
 ## Logs
 
 Docker provides a log system that store log in 1 file, unlimited length.\
