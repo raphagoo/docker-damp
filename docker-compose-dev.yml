@@ -1,5 +1,26 @@
 version: '3'
 services:
+    nginx:
+        container_name: nginx
+        image: nginx
+        ports:
+            - 88:88
+        networks:
+            - lamp_fpm
+        volumes:
+            - "./nginx/conf.d:/etc/nginx/conf.d:ro"
+            - "${WEB_VOLUME_DATA}:/var/www/data"
+            - "${WEB_VOLUME_DEV}:/var/www/dev"
+        depends_on:
+            - php70
+            - php72
+            - php74
+            - php80
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "200k"
+
     httpd24:
         container_name: apache_24
         build: httpd/2.4

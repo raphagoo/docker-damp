@@ -1,0 +1,14 @@
+###################################
+# Example for conf.d/default.conf #
+###################################
+
+server {
+    listen 88;
+    server_name nginx-local;
+
+    location /base/path/to/api {
+        alias /var/www/dev/base/path/to/api/web;
+        try_files $uri /base/path/to/api/index.php;
+        include conf.d/php74;
+    }
+}
