@@ -99,6 +99,18 @@ $cnx = new PDO("mysql:host=mysql57;port=3306", "cnx-name", "cnx-pwd");
 
 Aliases should be defined in `httpd/2.4/conf.d/alias.conf`, refering to `/var/www/...`
 
+The version of PHP is set in the file `.htaccess` of each project:
+
+```apache
+<FilesMatch \.php$>
+    SetHandler "proxy:fcgi://php74:9000"
+</FilesMatch>
+```
+
+## Nginx configuration
+
+Both locations aliases and PHP versions are defined in `nginx/conf.d/default.conf` (or whatever filename.conf)
+
 ## MySql tweaks
 
 ```sql
@@ -118,16 +130,6 @@ Once the `docker-compose.yml` is changed, it can be useful build the material, u
 ## Rebuild a single service
 
 * `docker-compose up -d --no-deps --build <service_name>`
-
-## Choosing the version of PHP
-
-The version of PHP is set in the file `.htaccess` of the project:
-
-```apache
-<FilesMatch \.php$>
-    SetHandler "proxy:fcgi://php74:9000"
-</FilesMatch>
-```
 
 ## Using dockerized SMTP
 
@@ -152,6 +154,8 @@ Various commands may help:
 * `docker-compose logs`
 
 TIP: use the `--help` option before.
+
+TIP: in VScode, the Docker extension eases in watching logs.
 
 ## Useful commands
 
