@@ -50,7 +50,6 @@ services:
             context: php-fpm/7.0/
         environment:
             XDEBUG_CONFIG: remote_host=${WEB_REMOTE_HOST} remote_port=9003 remote_enable=1
-        user: 33:33
         ports:
             - "9070:9000"
         volumes:
@@ -77,7 +76,6 @@ services:
             XDEBUG_MODE: develop,debug
             XDEBUG_SESSION: VSCODE
             XDEBUG_CONFIG: client_host=${WEB_REMOTE_HOST} start_with_request=trigger
-        user: 33:33
         ports:
             - "9072:9000"
         volumes:
@@ -104,7 +102,6 @@ services:
             XDEBUG_MODE: develop,debug
             XDEBUG_SESSION: VSCODE
             XDEBUG_CONFIG: client_host=${WEB_REMOTE_HOST} start_with_request=trigger
-        user: 33:33
         ports:
             - "9074:9000"
         volumes:
@@ -131,7 +128,6 @@ services:
             XDEBUG_MODE: develop,debug
             XDEBUG_SESSION: VSCODE
             XDEBUG_CONFIG: client_host=${WEB_REMOTE_HOST} start_with_request=trigger
-        user: 33:33
         ports:
             - "9080:9000"
         volumes:
