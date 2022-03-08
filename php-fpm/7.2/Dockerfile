@@ -17,3 +17,5 @@ RUN install-php-extensions\
     # dev
     @composer xdebug\
     pdo_mysql mysqli gd intl zip gmp
+
+USER www-data:www-data

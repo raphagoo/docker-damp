@@ -8,7 +8,7 @@ RUN apt-get install -y\
     libxrender1 libfontconfig1 libxext6
 
 # ------------------------------------------------------------ configuration PHP
-RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; 
+RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini";
 
 # --------------------------------------------------------------- extensions PHP
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -17,3 +17,5 @@ RUN install-php-extensions\
     # dev
     @composer xdebug\
     pdo_mysql mysqli gd intl zip gmp
+
+USER www-data:www-data
