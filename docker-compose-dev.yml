@@ -56,6 +56,7 @@ services:
         volumes:
             - "${WEB_VOLUME_DATA}:/var/www/data"
             - "${WEB_VOLUME_DEV}:/var/www/dev"
+            - root-ssh:/root/.ssh
         depends_on:
             - mysql57
             - mysql80
@@ -82,6 +83,7 @@ services:
         volumes:
             - "${WEB_VOLUME_DATA}:/var/www/data"
             - "${WEB_VOLUME_DEV}:/var/www/dev"
+            - root-ssh:/root/.ssh
         depends_on:
             - mysql57
             - mysql80
@@ -108,6 +110,7 @@ services:
         volumes:
             - "${WEB_VOLUME_DATA}:/var/www/data"
             - "${WEB_VOLUME_DEV}:/var/www/dev"
+            - root-ssh:/root/.ssh
         depends_on:
             - mysql57
             - mysql80
@@ -134,6 +137,7 @@ services:
         volumes:
             - "${WEB_VOLUME_DATA}:/var/www/data"
             - "${WEB_VOLUME_DEV}:/var/www/dev"
+            - root-ssh:/root/.ssh
         depends_on:
             - mysql57
             - mysql80
@@ -204,3 +208,6 @@ services:
 
 networks:
     lamp_fpm:
+
+volumes:
+    root-ssh:

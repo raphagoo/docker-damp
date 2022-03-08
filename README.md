@@ -70,6 +70,22 @@ services:
 $cnx = new PDO("mysql:host=mysql57;port=3306", "cnx-name", "cnx-pwd");
 ```
 
+## Using composer
+
+Composer should be used with a SSH key, witch is stored at `/root/.ssh`
+
+In `composer.json` the option `repositories` should be set as this:
+
+```json
+"repositories": [
+    {
+        "type": "git",
+        "url": "git@gitlab.com:takoma_fr/takoma/shared/lizy.git"
+    },
+    // ...
+],
+```
+
 ## Using xDebug on VScode
 
 * PHP must be installed on host
