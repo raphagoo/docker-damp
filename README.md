@@ -143,6 +143,12 @@ Once the `docker-compose.yml` is changed, it can be useful build the material, u
 
 * `docker-compose up --build -d --remove-orphans`
 
+## Update image
+
+```sh
+docker-compose build --pull
+```
+
 ## Rebuild a single service
 
 * `docker-compose up -d --no-deps --build <service_name>`
