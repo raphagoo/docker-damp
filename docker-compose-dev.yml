@@ -55,7 +55,8 @@ services:
         volumes:
             - ${WEB_VOLUME_DATA}:/var/www/data
             - ${WEB_VOLUME_DEV}:/var/www/dev
-            - ${SSH_KEYS}:/root/.ssh
+            - ${SSH_KEYS}:/var/www/.ssh
+            - composerCreds:/var/www/.composer
         depends_on:
             - mysql57
             - mysql80
@@ -66,6 +67,7 @@ services:
             driver: "json-file"
             options:
                 max-size: "200k"
+        user: www-data
 
     php72:
         container_name: php72
@@ -81,7 +83,8 @@ services:
         volumes:
             - ${WEB_VOLUME_DATA}:/var/www/data
             - ${WEB_VOLUME_DEV}:/var/www/dev
-            - ${SSH_KEYS}:/root/.ssh
+            - ${SSH_KEYS}:/var/www/.ssh
+            - composerCreds:/var/www/.composer
         depends_on:
             - mysql57
             - mysql80
@@ -92,6 +95,7 @@ services:
             driver: "json-file"
             options:
                 max-size: "200k"
+        user: www-data
 
     php74:
         container_name: php74
@@ -107,7 +111,8 @@ services:
         volumes:
             - ${WEB_VOLUME_DATA}:/var/www/data
             - ${WEB_VOLUME_DEV}:/var/www/dev
-            - ${SSH_KEYS}:/root/.ssh
+            - ${SSH_KEYS}:/var/www/.ssh
+            - composerCreds:/var/www/.composer
         depends_on:
             - mysql57
             - mysql80
@@ -118,6 +123,7 @@ services:
             driver: "json-file"
             options:
                 max-size: "200k"
+        user: www-data
 
     php80:
         container_name: php80
@@ -133,7 +139,8 @@ services:
         volumes:
             - ${WEB_VOLUME_DATA}:/var/www/data
             - ${WEB_VOLUME_DEV}:/var/www/dev
-            - ${SSH_KEYS}:/root/.ssh
+            - ${SSH_KEYS}:/var/www/.ssh
+            - composerCreds:/var/www/.composer
         depends_on:
             - mysql57
             - mysql80
@@ -144,6 +151,7 @@ services:
             driver: "json-file"
             options:
                 max-size: "200k"
+        user: www-data
 
     mysql57:
         container_name: mysql_57
@@ -206,4 +214,4 @@ networks:
     lamp_fpm:
 
 volumes:
-    root-ssh:
+    composerCreds:

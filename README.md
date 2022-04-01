@@ -135,9 +135,9 @@ SELECT @@sql_mode
 
 gives: `ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION`
 
-## Adding further php image
+## Adding further images
 
-It's possible to run as many php version as needed.
+It's possible to run as many php or mysql version as needed.
 NOTE that adding or removing a service can make ophans.
 Once the `docker-compose.yml` is changed, it can be useful build the material, using the following command:
 
@@ -192,9 +192,10 @@ NOTE: shell on ubuntu based image is `bash`, on alpine based image is `/bin/sh`
 * `docker-compose down` *stop + remove*
 * `docker-compose start`
 * `docker-compose stop`
-* `docker exec -ti php72_apache <shell command>` *execute interactively through TTY inside the container `php72_apache` the given command*
+* `docker exec -ti php72 <shell command>` *execute interactively through TTY inside the container `php72` the given command*
 * `docker logs -f  mysql_57`
 * `docker exec -ti -w /var/www/chemin_working_dir/ php74 command` *exécution d'une commande, par ex: composer*
+* `docker -exec -ti -u 0 php72 <shell command>` *run as root*
 
 ## Useful links
 

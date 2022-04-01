@@ -23,6 +23,7 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
+        user: www-data
 
     php72:
         container_name: php72
@@ -49,6 +50,7 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
+        user: www-data
 
     php74:
         container_name: php74
@@ -75,6 +77,7 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
+        user: www-data
 
     php80:
         container_name: php80
@@ -101,6 +104,7 @@ services:
             options:
                 max-size: "1m"
                 max-file: "2"
+        user: www-data
 
     smtp:
         image: namshi/smtp
