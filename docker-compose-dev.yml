@@ -45,7 +45,7 @@ services:
 
     php70:
         container_name: php70
-        image: php:7.0-fpm
+        image: php_dev:7.0
         build:
             context: php-fpm/7.0/
         environment:
@@ -71,7 +71,7 @@ services:
 
     php72:
         container_name: php72
-        image: php:7.2-fpm
+        image: php_dev:7.2
         build:
             context: php-fpm/7.2/
         environment:
@@ -99,7 +99,7 @@ services:
 
     php74:
         container_name: php74
-        image: php:7.4-fpm
+        image: php_dev:7.4
         build:
             context: php-fpm/7.4/
         environment:
@@ -127,7 +127,7 @@ services:
 
     php80:
         container_name: php80
-        image: php:8.0-fpm
+        image: php_dev:8.0
         build:
             context: php-fpm/8.0/
         environment:
